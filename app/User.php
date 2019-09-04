@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'phone', 'email', 'password',
     ];
 
     /**
@@ -39,7 +39,20 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public function role() {
-        return $this->hasOne('App\Role');
+        return $this->hasOne('App\Role', 'user_id', 'id');
+    }
+
+    public function image() {
+        return $this->morph('App\Image', 'imageable');
+    }
+
+    public function address() {
+        return $this->hasMany('App\Address', 'user_id', 'id');
+    }
+
+    public function password_resets()
+    {
+        return $this->hasOne('App\PasswordReset', 'email', 'email');
     }
 
     public function getJWTIdentifier()
@@ -56,6 +69,6 @@ class User extends Authenticatable implements JWTSubject
         if ( !empty($password) ) {
             $this->attributes['password'] = bcrypt($password);
         }
-    }  
+    }
 
 }
