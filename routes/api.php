@@ -22,15 +22,13 @@ Route::get('/reset-password/{id}', 'AuthController@reset_password');
 Route::post('/delete-account/{id}', 'AuthController@delete_account');
 Route::get('/cancel-reset-password/{id}', 'AuthController@cancel_reset_request');
 
+Route::resource('address', 'AddressController', [
+    'except' => ['edit', 'create']
+]);
+Route::resource('category', 'CategoryController', [
+    'except' => ['edit', 'create']
+]);
+Route::resource('product', 'ProductController', [
+    'except' => ['edit', 'create']
+]);
 
-Route::group(['middleware' => 'jwtauth'], function () {
-    Route::get('/protected', function() {
-        return response()->json(['message' => 'worked'], 200);
-    });
-    Route::resource('address', 'AddressController', [
-        'except' => ['edit', 'create']
-    ]);
-    Route::resource('category', 'CategoryController', [
-        'except' => ['edit', 'create']
-    ]);
-});
