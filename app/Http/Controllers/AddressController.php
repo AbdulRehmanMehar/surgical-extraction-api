@@ -17,6 +17,11 @@ class AddressController extends Controller
         'exists' => 'The :attribute value :input is not valid.'
     ];
 
+    public function __construct()
+    {
+        $this->middleware('jwtauth');
+    }
+
     public function index(Request $request)
     {
         $user = $request->attributes->get('user');
