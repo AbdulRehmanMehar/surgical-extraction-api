@@ -18,6 +18,6 @@ class FaculityVerification
         $user = $request->attributes->get('user');
         if ($user != null && $user->role->role != null && $user->role->role != 'customer')
             return $next($request);
-        return response()->json(['error' => 'Sorry, you cannot access this route.', $user], 400);
+        return response()->json(['error' => 'Sorry, you cannot access this route.'], 400);
     }
 }

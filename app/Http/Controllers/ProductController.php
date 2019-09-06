@@ -38,7 +38,7 @@ class ProductController extends Controller
         ], $this->validationMessages);
 
         if ($validator->fails()) {
-            return response() - json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $product = Product::create([
@@ -62,7 +62,7 @@ class ProductController extends Controller
 
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $obj = Product::where('id', $product)->first();
@@ -80,7 +80,7 @@ class ProductController extends Controller
         if ($deleted) {
             return response()->json(['message', 'Success! Product was removed from database.'], 200);
         }
-        return response()->json(['message', 'Sorry, Something went wrong.'], 400);
+        return response()->json(['error', 'Sorry, Something went wrong.'], 400);
     }
 
     public function show(Request $request, $product)

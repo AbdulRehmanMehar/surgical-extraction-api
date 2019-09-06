@@ -35,7 +35,7 @@ class CategoryController extends Controller
         ], $this->validationMessages);
 
         if ($validator->fails()) {
-            return response() - json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $category = Category::create([
@@ -55,7 +55,7 @@ class CategoryController extends Controller
 
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $obj = Category::where('id', $category)->first();
@@ -71,7 +71,7 @@ class CategoryController extends Controller
         if ($deleted) {
             return response()->json(['message', 'Success! Category was removed from database.'], 200);
         }
-        return response()->json(['message', 'Sorry, Something went wrong.'], 400);
+        return response()->json(['error', 'Sorry, Something went wrong.'], 400);
     }
 
     public function show(Request $request, $category)

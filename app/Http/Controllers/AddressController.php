@@ -39,7 +39,7 @@ class AddressController extends Controller
 
         if ($validator->fails())
         {
-            return response() - json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $address = Address::create([
@@ -63,7 +63,7 @@ class AddressController extends Controller
 
         if ($validator->fails())
         {
-            return response() - json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $obj = Address::find($address)->where('user_id', $user->id)->first();
@@ -82,7 +82,7 @@ class AddressController extends Controller
         {
             return response()->json(['message', 'Success! Address was removed from database.'], 200);
         }
-        return response()->json(['message', 'Sorry, Something went wrong.'], 400);
+        return response()->json(['error', 'Sorry, Something went wrong.'], 400);
     }
 
     public function show(Request $request, $address)
