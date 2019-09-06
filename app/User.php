@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function image() {
-        return $this->morph('App\Image', 'imageable');
+        return $this->morphMany('App\Image', 'imageable');
     }
 
     public function address() {
