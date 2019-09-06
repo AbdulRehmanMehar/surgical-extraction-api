@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+
 
 class Address extends JsonResource
 {
@@ -19,10 +21,10 @@ class Address extends JsonResource
         {
             return [
                 'id' => $this->id,
-                'user' => $this->user,
                 'state' => $this->state,
                 'country' => $this->country,
                 'address' => $this->address,
+                'user' => new UserResource($this->user),
             ];
         }
         catch (\Exception $e) {
