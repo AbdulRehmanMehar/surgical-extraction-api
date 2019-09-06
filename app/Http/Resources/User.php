@@ -21,6 +21,7 @@ class User extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'role' => $this->role->role,
             'verified' => $this->email_verified_at != null,
             'images' => ImageResource::collection($this->image),
             'address' => AddressResource::collection($this->address)
