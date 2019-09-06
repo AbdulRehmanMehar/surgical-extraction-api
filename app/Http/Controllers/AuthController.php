@@ -11,6 +11,7 @@ use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\User as UserResource;
 class AuthController extends Controller
 {
 
@@ -169,7 +170,7 @@ class AuthController extends Controller
             'access_token' => auth()->login($user),
             'token_type'   => 'bearer',
             'expires_in'   => auth()->factory()->getTTL() * 60,
-            'user' => $user,
+            'user' => new UserResource(User::find($user->id)),
         ]);
     }
 }
