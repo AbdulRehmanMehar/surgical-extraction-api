@@ -23,7 +23,6 @@ class ImageController extends Controller
     public function __construct()
     {
         $this->middleware('jwtauth', ['except' => ['index', 'show']]);
-        $this->middleware('faculity', ['except' => ['index', 'show']]);
     }
 
     public function index(Request $request)
@@ -34,7 +33,7 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $imageable_type = null;
-
+        $role = $request->attributes->get('user')->role->role;
         $validator = Validator::make($request->all(), [
             'image' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf|max:2000',
             'imageable_id' => 'nullable',
@@ -45,10 +44,10 @@ class ImageController extends Controller
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
-        if ($request->imageable_id && $request->imageable_type) {
+        if ($role && $request->imageable_id && $request->imageable_type) {
             if ($request->imageable_type == 'user') $imageable_type = User::class;
-            if ($request->imageable_type == 'product') $imageable_type = Product::class;
-            if ($request->imageable_type == 'category') $imageable_type = Category::class;
+            if ($request->imageable_type == 'product' && $role != 'customer') $imageable_type = Product::class;
+            if ($request->imageable_type == 'category' && $role != 'customer') $imageable_type = Category::class;
             if ($imageable_type != null && !$imageable_type::where('id', $request->imageable_id)->first()) {
                 return response()->json(['error' => 'Invalid imageable id.'], 401);
             }
@@ -67,7 +66,7 @@ class ImageController extends Controller
     {
         $base64 = null;
         $imageable_type = null;
-
+        $role = $request->attributes->get('user')->role->role;
         $validator = Validator::make($request->all(), [
             'image' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:2000',
             'imageable_id' => 'nullable',
@@ -78,10 +77,10 @@ class ImageController extends Controller
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
-        if ($request->imageable_id && $request->imageable_type) {
+        if ($role && $request->imageable_id && $request->imageable_type) {
             if ($request->imageable_type == 'user') $imageable_type = User::class;
-            if ($request->imageable_type == 'product') $imageable_type = Product::class;
-            if ($request->imageable_type == 'category') $imageable_type = Category::class;
+            if ($request->imageable_type == 'product' && $role != 'customer') $imageable_type = Product::class;
+            if ($request->imageable_type == 'category' && $role != 'customer') $imageable_type = Category::class;
             if ($imageable_type != null && !$imageable_type::where('id', $request->imageable_id)->first()) {
                 return response()->json(['error' => 'Invalid imageable id.'], 401);
             }
@@ -101,7 +100,14 @@ class ImageController extends Controller
 
     public function destroy(Request $request, $image)
     {
-        $deleted = Image::where('id', $image)->delete();
+        $deleted = false;
+        $var = Image::where('id', $image)->first();
+        $user = $request->attributes->get('user');
+        if ($var->imageable_type == User::class && $var->imageable_id == $user->id) {
+            $deleted = $var->delete();
+        } else if ($user->role->role && $user->role->role != 'customer') {
+            $deleted = true;
+        }
         if ($deleted) {
             return response()->json(['message', 'Success! Image was removed from database.'], 200);
         }
