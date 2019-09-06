@@ -31,4 +31,7 @@ Route::resource('category', 'CategoryController', [
 Route::resource('product', 'ProductController', [
     'except' => ['edit', 'create']
 ]);
+Route::resource('image', 'ImageController', [
+    'except' => ['edit', 'create']
+]);
 
