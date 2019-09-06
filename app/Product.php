@@ -17,4 +17,8 @@ class Product extends Model
     public function images() {
         return $this->morphMany('App\Image', 'imageable');
     }
+
+    public function featured() {
+        return $this->hasOne('App\FeaturedProduct');
+    }
 }
