@@ -3,7 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\Image as ImageResource;
+use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\FeaturedProduct as FeaturedResource;
 class Product extends JsonResource
 {
     /**
@@ -18,8 +20,9 @@ class Product extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'images' => $this->images,
-            'category' => $this->category
+            'images' => ImageResource::collection($this->images),
+            'category' => new CategoryResource($this->category),
+            'featured' => new FeaturedResource($this->featured),
         ];
     }
 }
