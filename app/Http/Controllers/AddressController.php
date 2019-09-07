@@ -25,7 +25,7 @@ class AddressController extends Controller
     public function index(Request $request)
     {
         $user = $request->attributes->get('user');
-        return AddressResource::collection($user->address);
+        return AddressResource::collection(Address::where('user_id', $user->id)->paginate());
     }
 
     public function store(Request $request)

@@ -27,7 +27,7 @@ class ImageController extends Controller
 
     public function index(Request $request)
     {
-        return ImageResource::collection(Image::all());
+        return ImageResource::collection(Image::paginate());
     }
 
     public function store(Request $request)
