@@ -15,9 +15,6 @@ class FeaturedProduct extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'product' => new ProductResource($this->product)
-        ];
+        return new ProductResource($this->product);
     }
 }

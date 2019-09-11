@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use JWTAuth;
 use App\User;
 use App\Role;
 use Carbon\Carbon;
@@ -33,7 +34,7 @@ class AuthController extends Controller
 
         if ($validator->fails())
         {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         $user = User::create([
@@ -62,7 +63,7 @@ class AuthController extends Controller
 
         if ($validator->fails())
         {
-            return response()-json(['error' => $validator->errors()], 401);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
 
         if (filter_var($request->email, FILTER_VALIDATE_EMAIL))
@@ -85,7 +86,16 @@ class AuthController extends Controller
         return $this->respondWithToken($user);
     }
 
-    public function reset_password(Request $request, $id)
+    public function get_user(Request $request) {
+        try {
+            $payload = JWTAuth::parseToken()->authenticate();
+            return new UserResource(User::find($payload->id));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function reset_password(Request $request, $id = null)
     {
         if ($request->isMethod('post'))
         {
@@ -95,7 +105,7 @@ class AuthController extends Controller
 
             if ($validator->fails())
             {
-                return response()->json(['error' => $validator->errors()], 401);
+                return response()->json(['errors' => $validator->errors()], 401);
             }
 
             if (! $user = User::where('email', $request->email)->first())
