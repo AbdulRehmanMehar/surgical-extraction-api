@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 Route::post('/register', 'AuthController@register');
+Route::post('/get-user', 'AuthController@get_user');
 Route::post('/reset-password', 'AuthController@reset_password');
 Route::post('/verify-email/{id}', 'AuthController@verify_email');
 Route::get('/reset-password/{id}', 'AuthController@reset_password');
