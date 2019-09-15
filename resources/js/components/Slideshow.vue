@@ -8,7 +8,14 @@
               <h1>{{ product.name }}</h1>
               <h3>@<router-link :to="{name: 'category', params: {id: product.category.id}}">{{ product.category.name }}</router-link></h3>
               <p>{{ product.description.slice(0, 200) + '...    ' }}</p>
-              <router-link :to="{name: 'product', params: {id: product.id}}" class="button is-link is-rounded">Details</router-link>
+              <div class="field is-grouped">
+                    <div class="control">
+                        <router-link :to="{name: 'product', params: {id: product.id}}" class="button is-link is-rounded">Details</router-link>
+                    </div>
+                    <div class="control">
+                        <a @click.prevent="$root.addToCart($event, product.id)" class="button is-success is-rounded">Add to Cart</a>
+                    </div>
+                </div>
             </div>
             <div class="slide-img column is-7">
               <div>

@@ -17,14 +17,7 @@ const Navigation = () => import('./components/Navigation')
 export default {
     name: 'app',
     created: function () {
-        this.$http.interceptors.response.use(undefined, function (err) {
-        return new Promise(function (resolve, reject) {
-            if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-            this.$store.dispatch(logout)
-            }
-            throw err;
-        });
-        });
+
     },
     components: {
         Foot,
@@ -49,5 +42,15 @@ export default {
 }
 .hidden {
     display: none;
+}
+.VueCarousel-slide.image {
+    background-color: #ccc;
+}
+
+.disabled {
+    color: #7a7a7a;
+    pointer-events: none;
+    border-color: #dbdbdb;
+    background-color: #dbdbdb;
 }
 </style>

@@ -43,10 +43,15 @@ const app = new Vue({
     router,
     store,
     created() {
-        this.$store.dispatch('loadUser')
-        .catch(() => {
-            // do nothing....
-        })
+        this.$http.interceptors.response.use(undefined, function (err) {
+            return new Promise(function (resolve, reject) {
+                if (err.status === 400 && err.config && !err.config.__isRetryRequest) {
+                    this.$store.dispatch(logout)
+                }
+                throw err;
+            });
+        });
+        if (this.isLoggedIn) this.$store.dispatch('loadUser')
     },
     mounted() {
         let url = '/' + window.location.href.split('/').pop()
@@ -55,6 +60,9 @@ const app = new Vue({
     methods: {
         logout: function() {
             this.$store.dispatch('logout')
+        },
+        setTitle: function(data) {
+            document.title = data + ' - ' + this.name
         }
     },
     render: h => h(App)
@@ -82,6 +90,12 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
     app.loading = false
+})
+
+router.onError(error => {
+    if (/loading chunk \d* failed./i.test(error.message)) {
+        window.location.reload()
+    }
 })
 
 Axios.interceptors.request.use(config => {
