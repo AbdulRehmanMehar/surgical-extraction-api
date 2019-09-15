@@ -45,6 +45,9 @@ export default {
             errors: []
         }
     },
+    created() {
+        this.$root.setTitle('Password Recovery')
+    },
     methods: {
         reset: function () {
             let data = {
