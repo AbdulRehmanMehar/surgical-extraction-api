@@ -4,10 +4,13 @@ const Terms = () => import('./views/Terms')
 const Product = () => import('./views/Product')
 const Login = () => import('./views/auth/Login')
 const Category = () => import('./views/Category')
+const NotFound = () => import('./views/NotFound')
 const Logout =  () => import('./views/auth/Logout')
 const Register = () => import('./views/auth/Register')
 const ResetPassword = () => import('./views/auth/Reset')
 const Dashboard = () => import('./views/protected/Dashboard')
+const ViewProfile = () => import('./views/protected/ViewProfile')
+const EditProfile = () => import('./views/protected/EditProfile')
 
 const routes = [
     {
@@ -80,8 +83,23 @@ const routes = [
                 path: 'dashboard',
                 name: 'dashboard',
                 component: Dashboard
+            },
+            {
+                path: 'view-profile',
+                name: 'view-profile',
+                component: ViewProfile
+            },
+            {
+                path: 'edit-profile',
+                name: 'edit-profile',
+                component: EditProfile
             }
         ]
+    },
+    {
+        path: '*',
+        name: '404',
+        component: NotFound
     }
 ]
 
