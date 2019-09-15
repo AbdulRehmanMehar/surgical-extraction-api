@@ -93,6 +93,41 @@ export default {
                     reject(error)
                 })
             });
+        },
+        updateUserPersonalInfo({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/update-user', data, method: 'POST'})
+                .then(resp => resolve(resp))
+                .catch(error => reject(error))
+            })
+        },
+        addNewAddress({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/address', data, method: 'POST' })
+                .then(resp => resolve(resp))
+                .catch(error => reject(error))
+            })
+        },
+        updateAddress({ commit }, data) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/address/'+data.address_id, data, method: 'PATCH' })
+                    .then(resp => resolve(resp))
+                    .catch(error => reject(error))
+            })
+        },
+        deleteAddress({ commit }, data) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/address/'+data.address_id, data, method: 'DELETE' })
+                    .then(resp => resolve(resp))
+                    .catch(error => reject(error))
+            })
+        },
+        addImage({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/image', data, method: 'POST' })
+                .then(resp => resolve(resp))
+                .catch(error => reject(error))
+            })
         }
     },
     getters: {
