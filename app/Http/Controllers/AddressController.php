@@ -25,7 +25,7 @@ class AddressController extends Controller
     public function index(Request $request)
     {
         $user = $request->attributes->get('user');
-        return AddressResource::collection(Address::where('user_id', $user->id)->paginate());
+        return AddressResource::collection(Address::where('user_id', $user->id));
     }
 
     public function store(Request $request)
@@ -66,7 +66,7 @@ class AddressController extends Controller
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
-        $obj = Address::find($address)->where('user_id', $user->id)->first();
+        $obj = Address::where('id', $address)->where('user_id', $user->id)->first();
         $obj->state = $request->state;
         $obj->country = $request->country;
         $obj->address = $request->address;
@@ -77,7 +77,7 @@ class AddressController extends Controller
     public function destroy(Request $request, $address)
     {
         $user = $request->attributes->get('user');
-        $deleted = Address::find($address)->where('user_id', $user->id)->delete();
+        $deleted = Address::where('id', $address)->where('user_id', $user->id)->delete();
         if ($deleted)
         {
             return response()->json(['message', 'Success! Address was removed from database.'], 200);

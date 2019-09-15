@@ -24,7 +24,7 @@ class Address extends JsonResource
                 'state' => $this->state,
                 'country' => $this->country,
                 'address' => $this->address,
-                'user' => new UserResource($this->user),
+                'user' => $this->user,
             ];
         }
         catch (\Exception $e) {

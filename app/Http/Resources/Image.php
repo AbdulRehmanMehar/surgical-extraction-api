@@ -20,18 +20,18 @@ class Image extends JsonResource
      */
     public function toArray($request)
     {
-        $imageable = null;
-        if ($this->imageable_type == User::class) {
-            $imageable = new UserResource($this->imageable);
-        } else if ($this->imageable_type == Product::class) {
-            $imageable = new ProductResource($this->imageable);
-        } else if ($this->imageable_type == Category::class) {
-            $imageable = new CategoryResource($this->imageable);
-        }
+        // $imageable = null;
+        // if ($this->imageable_type == User::class) {
+        //     $imageable = new UserResource($this->imageable);
+        // } else if ($this->imageable_type == Product::class) {
+        //     $imageable = new ProductResource($this->imageable);
+        // } else if ($this->imageable_type == Category::class) {
+        //     $imageable = new CategoryResource($this->imageable);
+        // }
         return [
             'id' => $this->id,
             'image' => $this->data,
-            'imageable' => $imageable
+            'imageable' => $this->imageable
         ];
     }
 }

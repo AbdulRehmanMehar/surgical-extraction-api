@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Product;
+use App\Category as CategoryModel;
 use App\Http\Resources\Image as ImageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Product as ProductResource;
@@ -22,6 +24,7 @@ class Category extends JsonResource
             'name' => $this->name,
             'parent' => new CategoryResource($this->category),
             'images' => ImageResource::collection($this->images),
+            'subcategories' => CategoryModel::where('parent', $this->id)->get(),
             'products' => ProductResource::collection($this->products),
         ];
     }

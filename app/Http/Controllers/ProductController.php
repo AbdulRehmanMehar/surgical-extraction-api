@@ -25,6 +25,9 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+        if ($request->category) {
+            return ProductResource::collection(Product::where('category_id', $request->category)->paginate());
+        }
         return ProductResource::collection(Product::paginate());
     }
 

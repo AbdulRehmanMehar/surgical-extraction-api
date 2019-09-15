@@ -29,7 +29,7 @@ class AuthController extends Controller
             'name' => 'required|between:5,20',
             'email' => 'required|unique:users|email:rfc',
             'phone' => 'required|unique:users|between:10,15',
-            'password' => 'required|same:confirm_password'
+            'password' => 'required|same:confirm_password||between:8,25'
         ], $this->validationMessages);
 
         if ($validator->fails())
@@ -93,6 +93,24 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
+    }
+
+    public function update_user(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'password' => 'nullable|same:confirm_password|between:8,25'
+        ], $this->validationMessages);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $reqUser = $request->attributes->get('user');
+        $user = User::where('id', $reqUser->id)->first();
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        if ($request->password) $user->password = $request->password;
+        $user->save();
+        return response()->json(['message' => 'Success! Profile was updated']);
     }
 
     public function reset_password(Request $request, $id = null)
