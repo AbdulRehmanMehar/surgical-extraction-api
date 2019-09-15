@@ -52,6 +52,9 @@ export default {
             errors: []
         }
     },
+    created() {
+        this.$root.setTitle('Login')
+    },
     methods: {
         login: function() {
             let data = {

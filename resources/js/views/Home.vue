@@ -35,6 +35,7 @@ export default {
         }
     },
     created() {
+        this.$root.setTitle('Home')
         this.$store.dispatch('get_featured_products')
         .then(resp => {
             this.featured_products = resp.data.data;

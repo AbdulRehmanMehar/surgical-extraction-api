@@ -94,7 +94,9 @@
 
 <script>
 export default {
-
+    created() {
+        this.$root.setTitle('Terms and Conditions')
+    }
 }
 </script>
 

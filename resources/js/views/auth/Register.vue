@@ -72,6 +72,9 @@ export default {
             errors: []
         }
     },
+    created() {
+        this.$root.setTitle('Register')
+    },
     methods: {
         register: function() {
             let data = {
