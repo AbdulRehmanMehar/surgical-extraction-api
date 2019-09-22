@@ -25,6 +25,7 @@
             </div>
             <br> <br>
             <div class="card">
+
                 <div class="card-content">
                     <div class="columns is-gapless">
                         <div class="column is-1" style="margin: auto auto">
@@ -36,6 +37,48 @@
                                 <div class="field is-grouped">
                                     <div class="control">
                                         <router-link :to="{name: 'view-orders'}" class="button is-link is-rounded is-fullwidth">View</router-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div  v-if="$root.currentUser.role == 'admin'">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="columns is-gapless">
+                            <div class="column is-1" style="margin: auto auto">
+                                <i class="fas fa-object-group fa-4x" style="display: block"></i>
+                            </div>
+                            <div class="column is-10    ">
+                                <div class="content">
+                                    <h1 class="title is-3">Categories</h1>
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <router-link :to="{name: 'manage-categories'}" class="button is-link is-rounded is-fullwidth">Manage</router-link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br> <br>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="columns is-gapless">
+                            <div class="column is-1" style="margin: auto auto">
+                                <i class="fab fa-product-hunt fa-4x" style="display: block"></i>
+                            </div>
+                            <div class="column is-10    ">
+                                <div class="content">
+                                    <h1 class="title is-3">Products</h1>
+                                    <div class="field is-grouped">
+                                        <div class="control">
+                                            <router-link :to="{name: 'manage-products'}" class="button is-link is-rounded is-fullwidth">Manage</router-link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="container" style="margin: 100px auto">
-        <div class="columns" v-if="$root.currentUser">
+        <div class="columns">
             <div class="column is-12">
                 <div class="wrapper">
                     <div class="header">
@@ -12,7 +12,7 @@
                         </router-link>
                     </div>
                     <div class="middle">
-                        <img :src="'data:image/png;base64,' + ($root.currentUser.images && $root.currentUser.images.length) ? $root.currentUser.images[0].image : null" alt="" class="user-pic" />
+                        <img :src="'data:image/png;base64,'" alt="" class="user-pic" />
                         <h4 class="name">{{ $root.currentUser.name }}</h4>
                         <h4 class="work">{{ $root.currentUser.email }}</h4>
                         <h4 class="social">{{$root.currentUser.phone}}</h4>
