@@ -13,6 +13,12 @@ export default {
                 vm.$router.push('/')
             }
         })
+    },
+    created() {
+        if (!this.$root.isLoggedIn) {
+                this.$toastr('danger', 'You\'re not logged in.', 'Aaah!')
+                this.$router.push('/')
+            }
     }
 }
 </script>
