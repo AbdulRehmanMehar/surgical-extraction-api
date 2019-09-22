@@ -1,4 +1,6 @@
 const Auth = () => import('./Auth')
+const Admin = () => import('./Admin')
+const Cart = () => import('./views/Cart')
 const Home = () => import('./views/Home')
 const Terms = () => import('./views/Terms')
 const Product = () => import('./views/Product')
@@ -11,6 +13,8 @@ const ResetPassword = () => import('./views/auth/Reset')
 const Dashboard = () => import('./views/protected/Dashboard')
 const ViewProfile = () => import('./views/protected/ViewProfile')
 const EditProfile = () => import('./views/protected/EditProfile')
+const ManageProducts = () => import('./views/protected/admin/ManageProducts')
+const ManageCategories = () => import('./views/protected/admin/ManageCategories')
 
 const routes = [
     {
@@ -35,6 +39,14 @@ const routes = [
         component: Login,
         meta: {
             title: 'Login'
+        }
+    },
+    {
+        path: '/cart',
+        name: 'cart',
+        component: Cart,
+        meta: {
+            title: 'Cart'
         }
     },
     {
@@ -93,6 +105,23 @@ const routes = [
                 path: 'edit-profile',
                 name: 'edit-profile',
                 component: EditProfile
+            },
+            {
+                path: 'admin',
+                name: 'admin',
+                component: Admin,
+                children: [
+                    {
+                        path: 'products',
+                        name: 'manage-products',
+                        component: ManageProducts
+                    },
+                    {
+                        path: 'categories',
+                        name: 'manage-categories',
+                        component: ManageCategories
+                    },
+                ]
             }
         ]
     },
