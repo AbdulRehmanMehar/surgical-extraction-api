@@ -37,17 +37,19 @@ class FeaturedController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
-
-        $featured = FeaturedProduct::create([
-            'product_id' => $request->product
-        ]);
+        $featured = FeaturedProduct::where('product_id', $request->product)->first();
+        if (!$featured) {
+            $featured = FeaturedProduct::create([
+                'product_id' => $request->product
+            ]);
+        }
 
         return new FeaturedResource(FeaturedProduct::find($featured->id));
     }
 
     public function destroy(Request $request, $featured)
     {
-        $deleted = FeaturedProduct::where('id', $featured)->delete();
+        $deleted = FeaturedProduct::where('product_id', $featured)->delete();
         if ($deleted) {
             return response()->json(['message', 'Success! FeaturedProduct was removed from database.'], 200);
         }

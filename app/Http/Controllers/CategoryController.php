@@ -24,7 +24,7 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        return CategoryResource::collection(Category::paginate());
+        return CategoryResource::collection(Category::all());
     }
 
     public function store(Request $request)

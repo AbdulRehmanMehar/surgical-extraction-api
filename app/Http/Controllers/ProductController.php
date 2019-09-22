@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Image;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,10 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->category) {
+        if ($request->has('category')) {
+            if ($request->has('search')) {
+                return ProductResource::collection(Product::where('category_id', $request->category)->where('name', 'like', '%'. $request->search .'%')->paginate());
+            }
             return ProductResource::collection(Product::where('category_id', $request->category)->paginate());
         }
         return ProductResource::collection(Product::paginate());
@@ -36,21 +40,25 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required',
-            'description' => 'required|between:500,5000',
-            'category' => 'required|exists:category,id'
+            'description' => 'required|min:500',
+            'category' => 'required|exists:categories,id'
         ], $this->validationMessages);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
-        $product = Product::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category,
-            'description' => $request->description,
-        ]);
-
+        // $product = Product::create([
+        //     'name' => $request->name,
+        //     'price' => $request->price,
+        //     'description' => $request->description,
+        // ]);
+        $product = new Product();
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->category_id = $request->category;
+        $product->description = $request->description;
+        $product->save();
         return new ProductResource(Product::find($product->id));
     }
 
@@ -59,8 +67,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required',
-            'description' => 'required|between:500,5000',
-            'category' => 'required|exists:category,id'
+            'description' => 'required|min:500',
+            'category' => 'required|exists:categories,id'
         ], $this->validationMessages);
 
 
@@ -79,11 +87,14 @@ class ProductController extends Controller
 
     public function destroy(Request $request, $product)
     {
-        $deleted = Product::where('id', $product)->delete();
+        $obj = Product::where('id', $product)->first();
+        $obj->images()->delete();
+        $obj->featured()->delete();
+        $deleted = $obj->delete();
         if ($deleted) {
-            return response()->json(['message', 'Success! Product was removed from database.'], 200);
+            return response()->json(['message' => 'Success! Product was removed from database.'], 200);
         }
-        return response()->json(['error', 'Sorry, Something went wrong.'], 400);
+        return response()->json(['error' => 'Sorry, Something went wrong.'], 400);
     }
 
     public function show(Request $request, $product)

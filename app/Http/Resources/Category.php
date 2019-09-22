@@ -22,10 +22,9 @@ class Category extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'parent' => new CategoryResource($this->category),
-            'images' => ImageResource::collection($this->images),
+            'parent' => $this->category,
+            'images' => $this->images,
             'subcategories' => CategoryModel::where('parent', $this->id)->get(),
-            'products' => ProductResource::collection($this->products),
         ];
     }
 }

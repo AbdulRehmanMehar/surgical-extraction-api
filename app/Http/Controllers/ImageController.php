@@ -106,12 +106,12 @@ class ImageController extends Controller
         if ($var->imageable_type == User::class && $var->imageable_id == $user->id) {
             $deleted = $var->delete();
         } else if ($user->role->role && $user->role->role != 'customer') {
-            $deleted = true;
+            $deleted = $var->delete();
         }
         if ($deleted) {
-            return response()->json(['message', 'Success! Image was removed from database.'], 200);
+            return response()->json(['message' => 'Success! Image was removed from database.'], 200);
         }
-        return response()->json(['error', 'Sorry, Something went wrong.'], 400);
+        return response()->json(['error' => 'Sorry, Something went wrong.'], 400);
     }
 
     public function show(Request $request, $image)
