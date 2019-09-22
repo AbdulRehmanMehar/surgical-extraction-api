@@ -2,7 +2,7 @@
     <div id="app">
         <Preloader :class="{'hidden': !$root.loading}" />
         <div>
-            <Navigation v-if="$root.navbar" />
+            <Navigation :categories="categories" v-if="$root.navbar" />
             <router-view></router-view>
             <Foot v-if="$root.footer" />
         </div>
@@ -16,8 +16,22 @@ const Navigation = () => import('./components/Navigation')
 
 export default {
     name: 'app',
+    data() {
+        return {
+            categories: null
+        }
+    },
     created: function () {
-
+        this.loadCategories()
+    },
+    methods: {
+        loadCategories: function () {
+            this.$store.dispatch('get_all_categories')
+            .then(resp => {
+                this.categories = resp.data.data
+            })
+            .catch(error => console.log(error))
+        },
     },
     components: {
         Foot,
