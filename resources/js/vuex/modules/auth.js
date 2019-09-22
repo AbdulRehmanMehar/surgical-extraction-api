@@ -24,7 +24,6 @@ export default {
                 .then(resp => {
                     const token = resp.data.token_type + ' ' + resp.data.access_token
                     const user = resp.data.user
-                    console.log(resp)
                     localStorage.setItem('token', token)
                     axios.defaults.headers.common['Authorization'] = token
                     commit('auth_success', token)
@@ -127,6 +126,13 @@ export default {
                 axios({ url: window.serverAddress + '/api/image', data, method: 'POST' })
                 .then(resp => resolve(resp))
                 .catch(error => reject(error))
+            })
+        },
+        deleteImage({ commit }, id) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/image/' + id, method: 'DELETE' })
+                    .then(resp => resolve(resp))
+                    .catch(error => reject(error))
             })
         }
     },
