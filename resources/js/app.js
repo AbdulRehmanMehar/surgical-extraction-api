@@ -8,15 +8,16 @@ import VueRouter from 'vue-router'
 import vuexStore from './vuex/index'
 import VueCarousel from 'vue-carousel'
 import VueToastr from '@deveodk/vue-toastr'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 import '@deveodk/vue-toastr/dist/@deveodk/vue-toastr.css'
 
 Vue.use(Vuex)
+Vue.use(CKEditor)
 Vue.use(VueRouter)
 Vue.use(VueToastr)
 Vue.use(VueCarousel)
 Vue.prototype.$http = Axios
 window.serverAddress = window.location.origin
-
 
 const token = localStorage.getItem('token')
 if (token) {
@@ -37,6 +38,7 @@ const app = new Vue({
         footer: true,
         loading: false,
     }, computed: {
+        cart: function() { return this.$store.getters.cart},
         isLoggedIn: function () { return this.$store.getters.isLoggedIn },
         currentUser: function () { return this.$store.getters.currentUser },
     },
@@ -63,6 +65,37 @@ const app = new Vue({
         },
         setTitle: function(data) {
             document.title = data + ' - ' + this.name
+        },
+        deleteImage: function($event, id) {
+            if (this.currentUser.role == 'admin') {
+                this.$store.dispatch('deleteImage', id)
+                .then(resp => {
+                    this.$toastr('info', 'Success! Image was deleted.', 'Information')
+
+                    $event.target.parentElement.style.display = 'none'
+                })
+                .catch(error => this.$toastr('danger', 'Aaah! Image couldn\'t be removed.', 'Error'))
+            }
+        },
+        addToCart: function($event, product, quantity = 10) {
+            this.$store.dispatch('add_to_cart', { product, quantity })
+            this.$toastr('info', 'Success!', 'Information')
+        },
+        deleteCart: function() {
+            this.$store.dispatch('delete_cart')
+            this.$toastr('info', 'Success!', 'Information')
+        },
+        placeOrder: function() {
+            if (this.isLoggedIn) {
+                this.$store.dispatch('place_order')
+                this.$toastr('info', 'Success!', 'Information')
+            } else {
+                this.$toastr('error', 'You must login to place order.', 'Error')
+            }
+        },
+        removeFromCart: function ($event, cart) {
+            this.$store.dispatch('remove_from_cart', cart)
+            this.$toastr('info', 'Success!', 'Information')
         }
     },
     render: h => h(App)
