@@ -7,19 +7,20 @@
             <div class="slide-copy column is-5">
               <h1>{{ product.name }}</h1>
               <h3>@<router-link :to="{name: 'category', params: {id: product.category.id}}">{{ product.category.name }}</router-link></h3>
-              <p>{{ product.description.slice(0, 200) + '...    ' }}</p>
+              <div class="content" v-html=" product.description.slice(0, 200) + '...    ' "></div>
               <div class="field is-grouped">
                     <div class="control">
                         <router-link :to="{name: 'product', params: {id: product.id}}" class="button is-link is-rounded">Details</router-link>
                     </div>
                     <div class="control">
-                        <a @click.prevent="$root.addToCart($event, product.id)" class="button is-success is-rounded">Add to Cart</a>
+                        <a v-if="$root.cart.find(x => x.product.id == product.id)" @click.prevent="$root.removeFromCart($event, {product})" class="button is-danger is-rounded is-fullwidth">Remove From Cart</a>
+                        <a v-else @click.prevent="$root.addToCart($event, product)" class="button is-success is-rounded is-fullwidth">Add to Cart</a>
                     </div>
                 </div>
             </div>
             <div class="slide-img column is-7">
               <div>
-                    <img v-if="product.images && product.images.length" :src="product.images[0]">
+                    <img v-if="product.images && product.images.length" :src="'data:image/png;base64,' + product.images[0].data">
                     <img v-else :src="dummyImage">
               </div>
             </div>
