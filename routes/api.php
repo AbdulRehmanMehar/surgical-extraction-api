@@ -36,7 +36,9 @@ Route::resource('product', 'ProductController', [
 Route::resource('image', 'ImageController', [
     'except' => ['edit', 'create']
 ]);
+Route::resource('order', 'OrderController', [
+    'except' => ['edit', 'create', 'update']
+]);
 Route::resource('featured-product', 'FeaturedController', [
     'except' => ['edit', 'create', 'update']
 ]);
-

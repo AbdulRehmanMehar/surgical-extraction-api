@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\Image as ImageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Address as AddressResource;
@@ -24,7 +25,8 @@ class User extends JsonResource
             'role' => $this->role->role,
             'verified' => $this->email_verified_at != null,
             'images' => ImageResource::collection($this->image),
-            'address' => AddressResource::collection($this->address)
+            'address' => AddressResource::collection($this->address),
+            'orders' => OrderResource::collection($this->orders)
         ];
     }
 }
