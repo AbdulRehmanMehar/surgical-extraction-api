@@ -33,7 +33,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     data: {
-        name: 'Airfort',
+        name: 'Surgical Extraction',
         navbar: true,
         footer: true,
         loading: false,
