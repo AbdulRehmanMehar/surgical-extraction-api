@@ -30,7 +30,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = $request->attributes->get('user');
-        if ($user->role->role && $user->role->role != 'customer') {
+        if ($user->role->role && $user->role->role != 'customer' && $request->has('all')) {
             if ($request->has('type')) return OrderResource::collection(Orders::where('status', $request->type)->paginate());
             return OrderResource::collection(Orders::paginate());
         }
@@ -75,9 +75,9 @@ class OrderController extends Controller
     {
         $user = $request->attributes->get('user');
         if ($user->role->role && $user->role->role != 'customer') {
-            return new OrderResource(Orders::where('id', $id));
+            return new OrderResource(Orders::find($id));
         }
-        return new OrderResource(Orders::where('id', $id)->where('user_id', $user->id));
+        return new OrderResource(Orders::find($id)->where('user_id', $user->id));
     }
 
     /**
@@ -103,7 +103,7 @@ class OrderController extends Controller
         $order->status = $request->status;
         $order->details = $request->details;
         $order->save();
-        return new OrderResource(Orders::where('id', $order->id));
+        return new OrderResource(Orders::find($order->id));
     }
 
     /**

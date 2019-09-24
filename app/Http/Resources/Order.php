@@ -19,6 +19,7 @@ class Order extends JsonResource
             'cart' => $this->cart,
             'status' => $this->status,
             'details' => $this->details,
+            'date' => $this->created_at,
             'user' => $this->user,
             'address' => $this->user->address
         ];
