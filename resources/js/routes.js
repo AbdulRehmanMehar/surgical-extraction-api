@@ -2,6 +2,7 @@ const Auth = () => import('./Auth')
 const Admin = () => import('./Admin')
 const Cart = () => import('./views/Cart')
 const Home = () => import('./views/Home')
+const Order = () => import('./views/Order')
 const Terms = () => import('./views/Terms')
 const Product = () => import('./views/Product')
 const Login = () => import('./views/auth/Login')
@@ -13,6 +14,7 @@ const ResetPassword = () => import('./views/auth/Reset')
 const Dashboard = () => import('./views/protected/Dashboard')
 const ViewProfile = () => import('./views/protected/ViewProfile')
 const EditProfile = () => import('./views/protected/EditProfile')
+const ManageOrders = () => import('./views/protected/admin/ManageOrders')
 const ManageProducts = () => import('./views/protected/admin/ManageProducts')
 const ManageCategories = () => import('./views/protected/admin/ManageCategories')
 
@@ -107,6 +109,18 @@ const routes = [
                 component: EditProfile
             },
             {
+                path: 'orders',
+                name: 'order',
+                component: Order,
+                children: [
+                    {
+                        path: ':id',
+                        name: 'order-data',
+                        component: Order
+                    }
+                ]
+            },
+            {
                 path: 'admin',
                 name: 'admin',
                 component: Admin,
@@ -121,6 +135,11 @@ const routes = [
                         name: 'manage-categories',
                         component: ManageCategories
                     },
+                    {
+                        path: 'orders',
+                        name: 'manage-orders',
+                        component: ManageOrders
+                    }
                 ]
             }
         ]

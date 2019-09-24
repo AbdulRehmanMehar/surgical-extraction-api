@@ -63,6 +63,7 @@ export default {
 
 .disabled {
     color: #7a7a7a;
+    cursor: not-allowed;
     pointer-events: none;
     border-color: #dbdbdb;
     background-color: #dbdbdb;

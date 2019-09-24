@@ -1,6 +1,5 @@
 import axios from "axios"
 
-
 let cart = window.localStorage.getItem('cart');
 
 
@@ -47,6 +46,39 @@ export default {
         },
         delete_cart({commit}) {
             commit('delete_cart')
+        },
+        place_order({commit, state}){
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/order', data: {
+                    cart: JSON.stringify(state.cart)
+                }, method: 'POST' })
+                .then(res => {
+                    commit('delete_cart')
+                    resolve(res)
+                })
+                .catch(error => reject(error))
+            })
+        },
+        get_orders({commit}, data)  {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/order?page=' + (data.page ? data.page : 1) + (data.all ? '&all=true' : ''), method: 'GET' })
+                .then(res => resolve(res))
+                .catch(error => reject(error))
+            })
+        },
+        get_order({ commit }, id) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/order/'+id, method: 'GET' })
+                    .then(res => resolve(res))
+                    .catch(error => reject(error))
+            })
+        },
+        update_order({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/order/' + data.id, data, method: 'PATCH' })
+                .then(res => resolve(res))
+                .catch(error => reject(error))
+            })
         }
     },
     getters: {

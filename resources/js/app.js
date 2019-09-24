@@ -88,7 +88,14 @@ const app = new Vue({
         placeOrder: function() {
             if (this.isLoggedIn) {
                 this.$store.dispatch('place_order')
-                this.$toastr('info', 'Success!', 'Information')
+                .then(resp => {
+                    this.$store.dispatch('loadUser')
+                    this.$toastr('info', 'Success! Order just got placed.', 'Information')
+                    this.$router.push({name: 'orders', params: {id: res.data.id}})
+                }).catch(error => {
+                    if (error.response.data.error)
+                    this.$toastr('error', 'Aah! Something went wrong.', 'Error')
+                })
             } else {
                 this.$toastr('error', 'You must login to place order.', 'Error')
             }
