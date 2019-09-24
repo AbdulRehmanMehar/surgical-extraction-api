@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\Cors\ServiceProvider::class,
         Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
 
         /*
