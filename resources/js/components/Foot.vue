@@ -3,18 +3,18 @@
         <div class="content">
             <div class="columns">
                 <div class="column is-7">
-                    <h1 class="title is-3">About Us</h1>
-                    <p>Airfort is an Industory known for developing instruments. Our instruments are used in many fields like beauty, surgery and vertenary. We are aimed to provide the best and quality instruments.</p>
+                    <!-- <h1 class="title is-3">About Us</h1>
+                    <p>Airfort is an Industory known for developing instruments. Our instruments are used in many fields like beauty, surgery and vertenary. We are aimed to provide the best and quality instruments.</p> -->
 
                     <p style="padding-top: 16px;">
                         &copy;
-                        <strong> Airfort </strong>
+                        <strong> {{ $root.name }} </strong>
                         {{ year }}. All Rights Reserved.
                     </p>
                     <p>
                         Developed by
-                        <b><a href="http://aidas.tech" target="_blank">Aidas</a></b>,
-                        <a href="http://owner.aidas.tech" target="_blank">Abdul Rehman</a>.
+                        <b><a href="https://github.com/aidas315" target="_blank">Aidas</a></b>,
+                        <a href="https://github.com/AbdulRehmanMehar" target="_blank">Abdul Rehman</a>.
                     </p>
                 </div>
                 <div class="column is-3">
