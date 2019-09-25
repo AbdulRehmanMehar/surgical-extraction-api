@@ -15,7 +15,7 @@
             <div id="navbarExampleTransparentExample" class="navbar-menu" :class="{'is-active': navburger}">
 
                 <div class="navbar-start">
-                    <router-link v-for="category in parentCategories" :key="category.id" :to="{name: 'category', params: {id: category.id}}">{{ category.name }}</router-link>
+                    <router-link class="navbar-item" v-for="category in parentCategories" :key="category.id" :to="{name: 'category', params: {id: category.id}}">{{ category.name }}</router-link>
                     <div class="navbar-item has-dropdown is-hoverable" v-for="category in parentCategoriesWithSubCategories" :key="category.id">
                             <a @click.prevent="function(){}" class="navbar-link">{{ category.name }}</a>
                             <div class="navbar-dropdown">
