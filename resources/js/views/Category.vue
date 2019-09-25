@@ -13,7 +13,7 @@
 
                 </carousel>
                 <div v-else>
-                    <div class="image is-3by1" :style="{'background-image': 'url(' + dummyImage + ')' }">
+                    <div class="image is-3by1" :style="{'background-image': 'url(' + window.serverAddress + '/images/dummy.jpg)' }">
                     </div>
                 </div>
                 <br><br>
