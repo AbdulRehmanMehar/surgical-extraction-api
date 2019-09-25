@@ -66,7 +66,7 @@
             parentCategories: function() {
                 if (this.categories && this.categories.length) {
                     return this.categories.filter(function(category) {
-                        return !category.parent && !category.subcategories
+                        return !category.parent && !category.subcategories.length
                     })
                 }
             },
