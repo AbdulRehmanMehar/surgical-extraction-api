@@ -12,10 +12,10 @@
                         </slide>
 
                 </carousel>
-                <div v-else>
-                    <div class="image is-3by1" :style="{'background-image': 'url(' + window.serverAddress + '/images/dummy.jpg)' }">
+                <!-- <div v-else>
+                    <div class="image is-3by1" :style="{'background-image': 'url(/images/dummy.jpg)' }">
                     </div>
-                </div>
+                </div> -->
                 <br><br>
                 <div class="has-text-centered">
                     <h1 class="title is-3">@{{ name }}
