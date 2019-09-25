@@ -134,6 +134,47 @@ export default {
                     .then(resp => resolve(resp))
                     .catch(error => reject(error))
             })
+        },
+        verify_email({commit}, id) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/verify-email/' + id, method: 'POST' })
+                .then(resp => {
+                    const token = resp.data.token_type + ' ' + resp.data.access_token
+                    const user = resp.data.user
+                    localStorage.setItem('token', token)
+                    axios.defaults.headers.common['Authorization'] = token
+                    commit('auth_success', token)
+                    commit('load_user', user)
+                    resolve(resp)
+                }).catch(error => reject(error))
+            })
+        },
+        password_reset({ commit }, id) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/reset-password/' + id, method: 'POST' })
+                    .then(resp => {
+                        const token = resp.data.token_type + ' ' + resp.data.access_token
+                    const user = resp.data.user
+                    localStorage.setItem('token', token)
+                    axios.defaults.headers.common['Authorization'] = token
+                    commit('auth_success', token)
+                    commit('load_user', user)
+                        resolve(resp)
+                    }).catch(error => reject(error))
+            })
+        },
+        cancel_verify_email({commit},id) {
+            return new Promise(resolve => {
+                resolve(true)
+            })
+        },
+        cancel_password_reset({commit}, id) {
+            return new Promise((resolve, reject) => {
+                axios({ url: window.serverAddress + '/api/cancel-reset-password/' + id, method: 'POST' })
+                    .then(resp => {
+                        resolve(resp)
+                    }).catch(error => reject(error))
+            })
         }
     },
     getters: {

@@ -8,6 +8,7 @@ const Product = () => import('./views/Product')
 const Login = () => import('./views/auth/Login')
 const Category = () => import('./views/Category')
 const NotFound = () => import('./views/NotFound')
+const Handler = () => import('./views/auth/Handler')
 const Logout =  () => import('./views/auth/Logout')
 const Register = () => import('./views/auth/Register')
 const ResetPassword = () => import('./views/auth/Reset')
@@ -143,6 +144,26 @@ const routes = [
                 ]
             }
         ]
+    },
+    {
+        path: '/reset/password/:id',
+        name: 'reset-password-handler',
+        component: Handler
+    },
+    {
+        path: '/verify/email/:id',
+        name: 'verify-email-handler',
+        component: Handler
+    },
+    {
+        path: '/cancel/reset/password/:id',
+        name: 'reset-password-cancel',
+        component: Handler
+    },
+    {
+        path: '/cancel/verify/email/:id',
+        name: 'verify-email-cancel',
+        component: Handler
     },
     {
         path: '*',
