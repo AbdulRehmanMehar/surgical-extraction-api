@@ -40,7 +40,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required',
-            'description' => 'required|min:500',
+            'description' => 'required|min:150',
             'category' => 'required|exists:categories,id'
         ], $this->validationMessages);
 
@@ -67,7 +67,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required',
-            'description' => 'required|min:500',
+            'description' => 'required|min:150',
             'category' => 'required|exists:categories,id'
         ], $this->validationMessages);
 
