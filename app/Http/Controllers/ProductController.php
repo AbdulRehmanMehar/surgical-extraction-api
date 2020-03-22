@@ -111,8 +111,8 @@ class ProductController extends Controller
 
     public function show(Request $request, $product)
     {
-        if (gettype($product) == "string") {
-
+        $checkId = (int) $product;
+        if ($checkId == 0) {
             return new ProductResource(Product::where('slug', $product)->firstOrFail());
         } else {
 
