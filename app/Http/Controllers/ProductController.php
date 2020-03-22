@@ -60,7 +60,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
-        $product->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
+        $product->slug = preg_replace('/\d/', '', strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name))));
         $product->category_id = $request->category;
         $product->description = $request->description;
         $product->meta_title = $request->meta_title;
@@ -88,7 +88,7 @@ class ProductController extends Controller
         $obj = Product::where('id', $product)->first();
         $obj->name = $request->name;
         $obj->price = $request->price;
-        $obj->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
+        $obj->slug = preg_replace('/\d/', '', strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name))));
         $obj->category_id = $request->category;
         $obj->meta_title = $request->meta_title;
         $obj->meta_description = $request->meta_description;
@@ -112,7 +112,7 @@ class ProductController extends Controller
     public function show(Request $request, $product)
     {
         $checkId = (int) $product;
-        if ($checkId == 0 && $checkId != $product) {
+        if ($checkId == 0) {
             return new ProductResource(Product::where('slug', $product)->firstOrFail());
         } else {
 
