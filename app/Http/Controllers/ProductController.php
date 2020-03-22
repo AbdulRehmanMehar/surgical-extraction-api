@@ -111,12 +111,6 @@ class ProductController extends Controller
 
     public function show(Request $request, $product)
     {
-        if (gettype($product) == "string") {
-
-            return new ProductResource(Product::where('slug', $product)->first());
-        } else {
-
-            return new ProductResource(Product::where('id',$product)->first());
-        }
+            return new ProductResource(Product::where('slug', $product)->orWhere('id', $product));
     }
 }
