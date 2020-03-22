@@ -20,12 +20,15 @@ class Product extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
+            'slug' => $this->slug,
             'images' => $this->images,
             'category' => [
                 'id' => $this->category->id,
                 'name' => $this->category->name
             ],
             'description' => $this->description,
+            'meta_description' => $this->meta_description,
+            'meta_title' => $this->meta_title,
             'featured' => $this->featured ? true : false,
         ];
     }
