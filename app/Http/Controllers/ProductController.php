@@ -112,7 +112,7 @@ class ProductController extends Controller
     public function show(Request $request, $product)
     {
         $checkId = (int) $product;
-        if ($checkId == 0) {
+        if ($checkId == 0 && $checkId != $product) {
             return new ProductResource(Product::where('slug', $product)->firstOrFail());
         } else {
 
