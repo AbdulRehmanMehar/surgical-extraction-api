@@ -40,6 +40,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required',
+            'meta_title' => 'required',
+            'meta_description' => 'required',
             'description' => 'required|min:150',
             'category' => 'required|exists:categories,id'
         ], $this->validationMessages);
@@ -53,11 +55,16 @@ class ProductController extends Controller
         //     'price' => $request->price,
         //     'description' => $request->description,
         // ]);
+
+
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
+        $product->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
         $product->category_id = $request->category;
         $product->description = $request->description;
+        $product->meta_title = $request->meta_title;
+        $product->meta_description = $request->meta_description;
         $product->save();
         return new ProductResource(Product::find($product->id));
     }
@@ -67,6 +74,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required',
+            'meta_title' => 'required',
+            'meta_description' => 'required',
             'description' => 'required|min:150',
             'category' => 'required|exists:categories,id'
         ], $this->validationMessages);
@@ -79,7 +88,10 @@ class ProductController extends Controller
         $obj = Product::where('id', $product)->first();
         $obj->name = $request->name;
         $obj->price = $request->price;
+        $obj->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
         $obj->category_id = $request->category;
+        $obj->meta_title = $request->meta_title;
+        $obj->meta_description = $request->meta_description;
         $obj->description = $request->description;
         $obj->save();
         return new ProductResource(Product::find($obj->id));
@@ -99,6 +111,12 @@ class ProductController extends Controller
 
     public function show(Request $request, $product)
     {
-        return new ProductResource(Product::find($product));
+        if (gettype($product) == "string") {
+
+            return new ProductResource(Product::where('slug', $product)->first());
+        } else {
+
+            return new ProductResource(Product::find($product));
+        }
     }
 }
