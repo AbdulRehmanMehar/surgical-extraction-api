@@ -116,7 +116,7 @@ class ProductController extends Controller
             return new ProductResource(Product::where('slug', $product)->first());
         } else {
 
-            return new ProductResource(Product::find($product));
+            return new ProductResource(Product::where('id',$product)->first());
         }
     }
 }
