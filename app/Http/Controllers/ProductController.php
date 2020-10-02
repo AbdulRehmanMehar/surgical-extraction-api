@@ -26,13 +26,17 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->has('category')) {
-            if ($request->has('search')) {
-                return ProductResource::collection(Product::where('category_id', $request->category)->where('name', 'like', '%'. $request->search .'%')->paginate());
+        
+        if ($request->has('paginate')) {
+            if ($request->has('category')) {
+                if ($request->has('search')) {
+                    return ProductResource::collection(Product::where('category_id', $request->category)->where('name', 'like', '%'. $request->search .'%')->paginate());
+                }
+                return ProductResource::collection(Product::where('category_id', $request->category)->paginate());
             }
-            return ProductResource::collection(Product::where('category_id', $request->category)->paginate());
+            return ProductResource::collection(Product::paginate());
         }
-        return ProductResource::collection(Product::paginate());
+        return ProductResource::collection(Product::all());
     }
 
     public function store(Request $request)
